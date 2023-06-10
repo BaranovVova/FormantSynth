@@ -5,6 +5,8 @@
 автор Баранов Владимир (vsbaranov83@gmail.com)
 Лицензия GPL
 
+Build with Qt 5.12.12
+
 Program Homepage
 https://sites.google.com/site/appfivedev/moi-programmy/formantnyj-sintezator
 
