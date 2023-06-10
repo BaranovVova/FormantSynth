@@ -2,7 +2,7 @@
 # FormantSynth
 
 Формантный синтезатор
-автор Баранов Владимир (vdbarster@gmail.com)
+автор Баранов Владимир (vsbaranov83@gmail.com)
 Лицензия GPL
 
 Program Homepage
