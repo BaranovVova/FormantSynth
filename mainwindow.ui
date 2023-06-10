@@ -15,23 +15,7 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QTabWidget" name="tabWidget">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(134, 255, 162);</string>
-      </property>
-      <property name="currentIndex">
-       <number>-1</number>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
+    <item row="2" column="0">
      <widget class="PianoWidget" name="pianoWidget" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
@@ -50,6 +34,34 @@
       </property>
      </widget>
     </item>
+    <item row="1" column="0">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(134, 255, 162);</string>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Page</string>
+       </attribute>
+      </widget>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QPushButton" name="switchTabButton">
+      <property name="text">
+       <string>SwitchTab</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -58,7 +70,7 @@
      <x>0</x>
      <y>0</y>
      <width>1102</width>
-     <height>28</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuTests">

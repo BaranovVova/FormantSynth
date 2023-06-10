@@ -4,19 +4,21 @@
 #
 #-------------------------------------------------
 
-QT       += core gui svg xml concurrent
-lessThan(QT_MAJOR_VERSION, 5): LIBS+=-lqwt -lasound -lpulse -lpulse-simple
-greaterThan(QT_MAJOR_VERSION, 4): LIBS+=-lqwt-qt5 -lasound -lpulse -lpulse-simple
+QT       += core gui svg xml concurrent multimedia
+unix: lessThan(QT_MAJOR_VERSION, 5): LIBS+=-lqwt -lasound -lpulse -lpulse-simple
+unix: greaterThan(QT_MAJOR_VERSION, 4): LIBS+=-lqwt-qt5 -lasound -lpulse -lpulse-simple
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-QMAKE_CXXFLAGS+=-g -std=c++11 -Wreorder
+#QMAKE_CXXFLAGS+=-g -std=c++11 -Wreorder
 
 TARGET = FormantSynth
 TEMPLATE = app
 
-INCLUDEPATH+=/usr/include/qwt
+INCLUDEPATH+=C:\\Projects\\neural-synt\\FormantSynth-mingw_build\\ThirdParty\\qwt-git\\src
 INCLUDEPATH+=./dsp
 INCLUDEPATH+=./fft
 INCLUDEPATH+=./Formant
+INCLUDEPATH+=./openglwindow
 INCLUDEPATH+=./Guitar
 INCLUDEPATH+=./SyntTest
 
@@ -27,6 +29,14 @@ SOURCES += main.cpp\
     dsp/pvoc.cpp \
 #    dsp/psample.cpp \
     fft/fft.cpp \
+    openglwindow/bigbangscene.cpp \
+    openglwindow/blastsphere.cpp \
+    openglwindow/common2.cpp \
+    openglwindow/newtonfractal.cpp \
+    openglwindow/openglwindow.cpp \
+    openglwindow/particle_render.cpp \
+    openglwindow/trianglewindow.cpp \
+    qtaudiodriver.cpp \
     wave_in.cpp \
     ploter.cpp \
 #    spectrogram.cpp \
@@ -64,6 +74,13 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     fft/stft.h \
+    openglwindow/bigbangscene.h \
+    openglwindow/blastsphere.h \
+    openglwindow/common2.h \
+    openglwindow/newtonfractal.h \
+    openglwindow/openglwindow.h \
+    openglwindow/particle_render.h \
+    openglwindow/trianglewindow.h \
     ploter.h \
     happybirsday.h \
     dsp/gen.h \
@@ -71,6 +88,7 @@ HEADERS  += mainwindow.h \
     common.h \
     fft/fft.h \
     complex.h \
+    qtaudiodriver.h \
     wave_in.h \
     dsp/pvoc.h \
     test.h \
@@ -113,3 +131,15 @@ FORMS    += mainwindow.ui \
 OTHER_FILES += \
     play_wav.sh \
     midi_data/happy_birsday.txt
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/3PartyLibs/lib/ -lqwt
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/3PartyLibs/lib/ -lqwtd
+
+#INCLUDEPATH += $$PWD/3PartyLibs/qwt
+#DEPENDPATH += $$PWD/3PartyLibs/qwt
+#INCLUDEPATH += $$PWD/3PartyLibs
+#DEPENDPATH += $$PWD/3PartyLibs
+
+RESOURCES += \
+    res.qrc
+

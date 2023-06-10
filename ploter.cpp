@@ -3,7 +3,9 @@
 #include <qwt_series_data.h>
 #include <qwt_plot_zoomer.h>
 #include <qwt_plot_panner.h>
+#include <QPen>
 #include <QMutex>
+#include <math.h>
 //#include <math.h>
 #include "ploter.h"
 extern "C" void rprintf(char* fmt,...);

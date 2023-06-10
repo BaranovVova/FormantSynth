@@ -10,10 +10,12 @@
 #include "channelsdlg.h"
 #include "FM/fm_dialog.h"
 #include "synttestform.h"
+#include "openglwindow/trianglewindow.h"
 #include "happybirsday.h"
 #include "ui_nessyntform.h"
 #include "ui_fm_dialog.h"
 #include <QKeyEvent>
+#include <QTimer>
 
 Ploter* p;
 Ploter* p2;
@@ -23,6 +25,7 @@ FM_Dialog* fwidget3;
 //double mag(complex_double d);
 
 QString input_file;
+TriangleWindow* gl_window;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -38,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //p2->plot->setGeometry(ui->specFrame->rect());
 
 
-
+    //QTimer::singleShot(1000, this, SLOT(play_netbop_song()));
     input_file = "oh-yeah-everything-is-fine.wav";
     connect(ui->actionSound_driver, SIGNAL(triggered(bool)), this, SLOT(on_sound_Settings()));
     connect(ui->actionPlay_happy_birsday, SIGNAL(triggered(bool)), this, SLOT(play_test_song()));
@@ -90,9 +93,31 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->pianoWidget, SIGNAL(sigMouseKeyDown(int)),  fwidget3->synt, SLOT(on_key_press(int)));
     connect(ui->pianoWidget, SIGNAL(sigMouseKeyRelease(int)), fwidget3->synt, SLOT(on_key_release(int)));
 
-    ui->tabWidget->setCurrentIndex(3);
+    //insert openglwindow
+
+
+    QSurfaceFormat format;
+    format.setSamples(16);
+
+    gl_window = new TriangleWindow();
+    gl_window->setFormat(format);
+    gl_window->resize(600,600);
+    gl_window->setAnimating(true);
+    gl_window->show();
+    QWidget* widget = QWidget::createWindowContainer(gl_window, this);
+    ui->tabWidget->show();
+    ui->tabWidget->insertTab(4,widget,QIcon(),"GL");
+
+
+
+    ui->tabWidget->setCurrentIndex(4);
 
     Test test;
+
+}
+
+void MainWindow::print(const QString& str )
+{
 
 }
 
@@ -127,6 +152,36 @@ void MainWindow::on_sound_Settings()
     dialog->show();
 }
 
+void MainWindow::play_netbop_song()
+{
+    qDebug() << "gl_window->geometry = " << gl_window->geometry();
+
+    FMSynth* synt = new FMSynth();
+    synt->bEnabled = true;
+    //QString fileName = "./midi_data/netbop.txt";
+    //QString fileName = "./midi_data/jackson2.txt";
+    //QString fileName = "./midi_data/beethoven1.txt";
+    QString fileName = "./midi_data/bach1.txt";
+    //QString fileName = "./midi_data/snoob1.txt";
+    //QString fileName = "./midi_data/happy_birsday.txt";
+    //QString piano_patch = "./patches/" + fwidget3->ui->comboBox->currentText() + ".patch";
+    //synt->LoadPatch("./patches/E.piano.patch",0);
+    synt->LoadPatch("./patches/orc.patch",0);
+    synt->LoadPatch("./patches/bass1.patch",1);
+    synt->SetEnabledChannels(3);
+    hb_song = new Happybirsday();
+    hb_song->set_synth(synt);
+    connect(hb_song,SIGNAL(noteShow(QString)),ui->pianoWidget,SLOT(on_key_show(QString)));
+    connect(hb_song,SIGNAL(noteHide(QString)),ui->pianoWidget,SLOT(on_key_hide(QString)));
+    std::vector<Notestruct>* notes = new std::vector<Notestruct>();
+    *notes = hb_song->parse_hb_notes(fileName);
+    //hb_song->generate_play_wave(*notes);
+    QtConcurrent::run(hb_song, &Happybirsday::generate_play_wave, *notes);
+    connect(hb_song, &Happybirsday::notePlay, gl_window, &TriangleWindow::notePlaySlot);
+    hb_song->Play(notes,0);
+
+}
+
 void MainWindow::play_test_song()
 {
     //synt.alsa->close();
@@ -151,6 +206,8 @@ void MainWindow::play_test_song()
             connect(hb_song,SIGNAL(noteHide(QString)),ui->pianoWidget,SLOT(on_key_hide(QString)));
             std::vector<Notestruct>* notes = new std::vector<Notestruct>();
             *notes = hb_song->parse_hb_notes(fileName);
+            //gl_window->initSlot();
+            connect(hb_song, &Happybirsday::notePlay, gl_window, &TriangleWindow::notePlaySlot);
             //hb_song->generate_play_wave(*notes);
             QtConcurrent::run(hb_song, &Happybirsday::generate_play_wave, *notes);
             hb_song->Play(notes,0);
@@ -315,3 +372,10 @@ void MainWindow::closeEvent(QCloseEvent* event)
        delete hb_song;
    }
 }
+
+void MainWindow::on_switchTabButton_clicked()
+{
+    ui->tabWidget->setCurrentIndex(3);
+    gl_window->hide();
+}
+

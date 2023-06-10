@@ -12,26 +12,33 @@ struct PianoKey
     QPointF pixel;
     int    code;
     bool   on;
+    int    n;
     QString name;
     QRectF  rect;
     QRectF  rect2;
     QRectF  rect3;
+    static  int counter;
     PianoKey()
         : on(false)
     {}
     PianoKey(QPoint pixel)
         : pixel(pixel), on(false)
     {
+
     }
-    PianoKey(QPoint pixel, QString name, QRectF rect)
-        : pixel(pixel), on(false), name(name), rect(rect)
+    PianoKey(QPoint pixel, QString name, QRectF rect, int n=0)
+        : pixel(pixel), on(false), name(name), rect(rect), n(n)
     {
         //pixel = rect.center();
+        n = counter;
+        counter++;
     }
     PianoKey(QString name, QRectF rect, QRectF rect2=QRectF(), QRectF rect3=QRectF())
-        : on(false), name(name), rect(rect), rect2(rect2), rect3(rect3)
+        : on(false), name(name), rect(rect), rect2(rect2), rect3(rect3), n(n)
     {
         pixel = rect.center();
+        n = counter;
+        counter++;
     }
 
 };

@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>openglwindow/fring.glsl</file>
+        <file>openglwindow/fshader.glsl</file>
+        <file>openglwindow/vring.glsl</file>
+        <file>openglwindow/vshader.glsl</file>
+    </qresource>
+</RCC>

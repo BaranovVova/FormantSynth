@@ -1,6 +1,6 @@
 #include "test.h"
 #include "envelope.h"
-#include "gen.h"
+#include "dsp/gen.h"
 #include "filter.h"
 #include "common.h"
 #include "ploter.h"

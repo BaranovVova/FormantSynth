@@ -4,6 +4,8 @@
 #include <math.h>
 #include "pianowidget.h"
 
+int PianoKey::counter = 0;
+
 PianoWidget::PianoWidget(QWidget *parent) : SvgWidget(parent)
 {
     //background = QImage("./images/piano_keys_and_notes.png");
@@ -83,7 +85,7 @@ void PianoWidget::create_table()
     //C4
     piano_keys['Q'] = PianoKey("C4", getRect("C4"),getRect("Db4"));
     piano_keys['W'] = PianoKey("D4", getRect("D4"),getRect("Eb4"),getRect("Db4"));
-    piano_keys['E'] = PianoKey("E4", getRect("E4"),getRect("Eb4"));
+    piano_keys['E'] = PianoKey("E4", getRect("E4"),getRect("Eb4"),QRectF());
     piano_keys['R'] = PianoKey("F4", getRect("F4"),getRect("Gb4"));
     piano_keys['T'] = PianoKey("G4", getRect("G4"),getRect("Gb4"),getRect("Ab4"));
     piano_keys['Y'] = PianoKey("A4", getRect("A4"),getRect("Ab4"),getRect("Bb4"));

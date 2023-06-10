@@ -55,6 +55,7 @@ public:
     void Stop();
 signals:
     void noteShow(QString noteName);
+    void notePlay(std::vector<Notestruct>* song, Notestruct n);
     void noteHide(QString noteName);
 
 

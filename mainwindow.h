@@ -23,6 +23,8 @@ public:
 signals:
     void keyPressSig(int);
     void keyReleaseSig(int);
+public slots:
+    void print(const QString& str );
 
 private slots:
     void on_sound_Settings();
@@ -30,11 +32,14 @@ private slots:
     void on_load_patch();
 
     void play_test_song();
+    void play_netbop_song();
 
 
     void on_tabWidget_currentChanged(QWidget *arg1);
 
     void on_tabWidget_currentChanged(int index);
+
+    void on_switchTabButton_clicked();
 
 private:
     Ui::MainWindow *ui;

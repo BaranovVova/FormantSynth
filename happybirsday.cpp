@@ -1,4 +1,4 @@
-#include "gen.h"
+#include "dsp/gen.h"
 #include "happybirsday.h"
 #include "filter.h"
 #include "wave_in.h"
@@ -6,6 +6,7 @@
 #include "envelope.h"
 #include "common.h"
 #include "buffer.h"
+#include <QDebug>
 #include <QString>
 #include <QFile>
 #include <QStringList>
@@ -128,6 +129,7 @@ void Happybirsday::timerEvent(QTimerEvent *)
             QString name = freq_table.getNoteName((*ns).note);
             float t_start = (*ns).t_start;
             float t_end = (*ns).t_end;
+           // qDebug() << "note "  << (int)(*ns).note;
             if((*ns).channel > 0) continue;
             if(!(*ns).isPlayed)
             {
@@ -136,6 +138,7 @@ void Happybirsday::timerEvent(QTimerEvent *)
                     if(!(*ns).isShown)
                     {
                         emit noteShow(name);
+                        emit notePlay(song, (*ns));
                         (*ns).isShown = true;
                     }
 
@@ -163,6 +166,7 @@ void Happybirsday::Play(std::vector<Notestruct>* song, QProgressBar* progress_ba
     this->song = song;
     this->progress_bar = progress_bar;
     isPlaying = true;
+
 }
 
 void Happybirsday::Stop()

@@ -1,0 +1,12 @@
+release/openglwindow.o
+release/bigbangscene.o
+release/blackhole.o
+release/blastsphere.o
+release/common.o
+release/main.o
+release/particle_render.o
+release/ring3d.o
+release/textform.o
+release/qrc_res.o
+release/moc_openglwindow.o
+release/moc_textform.o

@@ -1,0 +1,12 @@
+debug/openglwindow.o
+debug/bigbangscene.o
+debug/blackhole.o
+debug/blastsphere.o
+debug/common.o
+debug/main.o
+debug/particle_render.o
+debug/ring3d.o
+debug/textform.o
+debug/qrc_res.o
+debug/moc_openglwindow.o
+debug/moc_textform.o
